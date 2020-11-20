@@ -23,11 +23,11 @@ bonanza_hares <- read_csv(here("data", "bonanza_hares.csv"))
 
 ## Introduction
 
-A 4-5 sentence "mini-introduction"...
+This study explores data collected on the Snowshoe Hare, *Lepus americanus*, from Kielland et al. (2017). Kielland et al. (2017) performed capture-recapture studies of Snowshoe Hares in the Bonanza Creek Experimental Forest of Alaska. Located along the Tanana River, the Bonanza Creek Experimental Forest is a part of the Long Term Ecological Research (LTER) Network. Snowshoe Hares are a 'keystone' prey species in this location and other northern boreal forests. Therefore, population dynamics of the Snowshoe Hare are important to quantify as variation in hare populations can have significant effects upon both vegetation and predator populations in the area as well (Kielland et al., 2017). 
 
 ## Data and Analyses
 
-This data is for Snowshoe Hares (*Lepus americanus*) trapped along the Tanana River in the Bonanza Creek Experimental Forest as a part of the Long Term Ecological Research Network. Three sites are included in the data: a Bonanza Creek riparian area (Riparian), a Bonanza Creek mature spruce forest (Mature), and a Bonanza Creek lowland spruce stand (Lowland). Trapping data collected includes date, time, location, trap identification, session identification, and session study parameter along with Snowshoe Hare data collected that includes left and right ear tag values, sex, age, weight, hind foot length, and a unique animal identifier.
+The data examined in this report was collected over a time period from 1998-2012. Three sites are included in the data examined in this report: a Bonanza Creek riparian area (Riparian), a Bonanza Creek mature spruce forest (Mature), and a Bonanza Creek lowland spruce stand (Lowland). Trapping data collected includes date, time, location, trap identification, session identification, and session study parameter along with Snowshoe Hare data collected that includes left and right ear tag values, sex, age, weight, hind foot length, and a unique animal identifier (Kielland et al., 2017).
 
 Exploratory analyses will be performed on juvenile Snowshoe Hare counts to examine relationships between Snowshoe Hare weight as a factor or sex and site trapped. Statistical analyses will be performed on the juvenile hare data to determine the difference in means of the sample populations of male or female hares. Further analysis will be conducted using a linear regression analysis to determine the relationship between juvenile Snowshoe Hare weight and hind foot length along with the determination of the correlation between these two variables.
 
@@ -248,7 +248,7 @@ Exploratory data visualizations and analyses led to the following conclusions:
 
 Options for further developments:
 
-- 
+- Multiple linear regression analyses could be completed to better understand the relationship between weight, hind foot length, sex, and site.
 
 
 ### **Citations**
