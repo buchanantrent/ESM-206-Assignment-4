@@ -203,6 +203,10 @@ juvenile_lm_out <- broom::glance(juvenile_lm)
 
 plot(juvenile_lm)
 
+juvenile_cor <- cor.test(foot_weight$weight, foot_weight$hindft)
+
+juvenile_cor
+
 ```
 
 ```{r echo=FALSE,results=FALSE,warning=FALSE,message=FALSE}
@@ -226,6 +230,8 @@ ggplot(data = foot_weight,
   theme_bw()
 
 ```
+
+
 
 ### **Summary**
 
