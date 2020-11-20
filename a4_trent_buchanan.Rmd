@@ -227,3 +227,18 @@ ggplot(data = foot_weight,
 
 ```
 
+### **Summary**
+
+Exploratory data visualizations and analyses led to the following conclusions:
+
+- 
+
+
+Options for further developments:
+
+- 
+
+
+### **Citations**
+
+Kielland, K., F.S. Chapin, R.W. Ruess, and Bonanza Creek LTER. 2017. Snowshoe hare physical data in Bonanza Creek Experimental Forest: 1999-Present ver 22. Environmental Data Initiative. https://doi.org/10.6073/pasta/03dce4856d79b91557d8e6ce2cbcdc14 (Accessed 2020-11-20).
