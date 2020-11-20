@@ -46,16 +46,16 @@ hares_juvenile <- bonanza_hares %>%
 juvenile_count <- hares_juvenile %>% 
   count(year)
 
-ggplot(data = juvenile_count,
+ggplot(data = juvenile_count, #I left in the 2002 and 2009 gaps because I think that's important to at least show. 0 data is just as important as data.
        aes(x = year, y = n)) +
   geom_col() +
   labs(x = "Year",
        y = "Count",
        title = "Annual juvenile hare trap counts",
-       subtitle = "1999 - 2012",
+       subtitle = "1999 - 2012", #Said 1999 here because it was the first instance of juvenile data. 1998 didn't have any.
        tag = "Figure 1",
        caption = "Figure 1. Annual totals for juvenile Snowshoe Hares trapped at all grid sites between 1999 - 2012. Data: Kielland et al. (2017).") +
-  scale_x_continuous(breaks = seq(1999,2012,1)) +
+  scale_x_continuous(breaks = seq(1999,2012,1)) + #I think each year being shown is appropriate
   scale_y_continuous(breaks = seq(0,140,20)) +
   theme_bw()
   
@@ -70,15 +70,15 @@ However, it should be noted that these are absolute counts and the data is depen
 ```{r echo=FALSE,results=FALSE,warning=FALSE,message=FALSE}
 
 site_summary <- hares_juvenile %>% 
-  group_by(sex, grid) %>% 
+  group_by(sex, grid) %>% #this was key in fixing the means and standard deviations
   mutate(mean_weight = mean(weight, na.rm = T),
          sd_weight = sd(weight, na.rm = T))
   
 
-grid_names <- c("Lowland", "Mature", "Riparian")
+grid_names <- c("Lowland", "Mature", "Riparian") #this was for renaming the grid titles, I sw this technique first, tried it, and it worked, so I didn't try fixing it in the plot code
 names(grid_names) <- c("bonbs", "bonmat", "bonrip")
 
-site_count <- hares_juvenile %>% 
+site_count <- hares_juvenile %>% #this was for supplementing analysis
   count(grid)
 
 ggplot() +
@@ -89,7 +89,7 @@ ggplot() +
                 show.legend = FALSE,
                 size = 3,
                 alpha = 0.7) +
-  facet_wrap(~grid, labeller = labeller(grid = grid_names)) +
+  facet_wrap(~grid, labeller = labeller(grid = grid_names)) + #here is where I implemented the grid title fix
   scale_x_discrete(labels = c("Female", "Male", "NA")) +
   labs(x = "Sex",
        y = "Weight (g)",
@@ -99,13 +99,13 @@ ggplot() +
   geom_point(data = site_summary, aes(x = sex, y = mean_weight), 
              color = "black",
              size = 3) +
-  facet_wrap(~grid, labeller = labeller(grid = grid_names)) +
-  geom_errorbar(data = site_summary, 
+  facet_wrap(~grid, labeller = labeller(grid = grid_names)) + #Glad the facet wraps match up nicely
+  geom_errorbar(data = site_summary, #I chose error bar over boxplot because I think it looks cleaner. The boxplot got skinny and squased due to the nature of three side-by-side facet wrapped graphs
                 aes(x = sex, 
                     ymin = mean_weight - sd_weight,
                     ymax = mean_weight + sd_weight),
                 color = "black",
-                width = 0.3) +
+                width = 0.4) +
   facet_wrap(~grid, labeller = labeller(grid = grid_names)) +
   theme_bw()
   
@@ -128,13 +128,13 @@ juvenile_summary <- hares_juvenile %>%
 
 colnames(juvenile_summary) <- c("Sex","Mean Weight","Standard Deviation","Sample Size")
 
-kbl(juvenile_summary) %>% 
+kbl(juvenile_summary) %>% #Kable styling table appears clean and looks alright, so  I did not try to mess with it
   kable_styling()
 
 ```
 ```{r include=FALSE}
 
-ggplot(data = hares_juvenile, aes(x=weight)) +
+ggplot(data = hares_juvenile, aes(x=weight)) + #this is all exploratory and simply contributes to the analysis. Not included in the report because it is unnecessary in terms of visualization
   geom_histogram()
 
 ggplot(data= hares_juvenile, aes(sample = weight)) +
@@ -152,7 +152,7 @@ juvenile_ttest <- t.test(juveniles_f, juveniles_m)
 
 juvenile_ttest
 
-cohen.d(juveniles_f, juveniles_m, na.rm = T)
+cohen.d(juveniles_f, juveniles_m, na.rm = T) #ran into issues with this, but the na.rm = T was very helpful. I just wasn't sure where to put it at first.
 
 juvenile_out <- broom::tidy(juvenile_ttest)
 juvenile_out
@@ -167,7 +167,7 @@ On average, male juvenile Snowshoe Hares were larger than female juveniles (945.
 ```{r echo=FALSE,results=FALSE,warning=FALSE,message=FALSE}
 
 foot_weight <- hares_juvenile %>% 
-  select(weight, hindft)
+  select(weight, hindft) #Selecting for the two variables of interest just so I do not accidentally mess up the hares_juvenile df
 
 ggplot(data = foot_weight, 
             aes(x = hindft, 
@@ -179,7 +179,7 @@ ggplot(data = foot_weight,
        tag = "Figure 3",
        caption = "Figure 3. Comparison of observed hind foot length and weight of juvenile Snowshoe Hares. Data: Kielland et al. (2017).") +
   scale_x_continuous(breaks = seq(60,160,20)) +
-  scale_y_continuous(breaks = seq(0,1700,200)) +
+  scale_y_continuous(breaks = seq(0,1700,200)) + #I like these breaks, it makes it easier to align the data points, but I hope it doesn't make it too messy or crowded.
   theme_bw()
   
 
@@ -187,9 +187,9 @@ ggplot(data = foot_weight,
 
 The relationship between observed juvenile hares' hind foot length (mm) and weight (g) appears positive across all trapping sites, and may be linear but is not strong (Figure 3). 
 
-```{r include = FALSE}
+```{r include = FALSE} 
 
-juvenile_lm <- lm(weight ~ hindft, data = foot_weight)
+juvenile_lm <- lm(weight ~ hindft, data = foot_weight) #not included in the report because this is exploratory and helps with the analysis. Not necessary to see though.
 
 summary(juvenile_lm)
 
@@ -197,11 +197,11 @@ juvenile_lm_tidy <- broom::tidy(juvenile_lm)
 
 juvenile_int <- juvenile_lm_tidy$estimate[1]
 
-juvenile_coef <- juvenile_lm_tidy$estimate[2]
+juvenile_coef <- juvenile_lm_tidy$estimate[2] #lost track of this in the global environment, but glad I found it for my summary of findings
 
-juvenile_lm_out <- broom::glance(juvenile_lm)
+juvenile_lm_out <- broom::glance(juvenile_lm) #still not sure how broom works, but it produces a nicely accessible table for in-line referencing
 
-plot(juvenile_lm)
+plot(juvenile_lm) #interesting how this plots the four graphs. Kind of feels like I should include these, or at least a couple of them, but I will not. 
 
 juvenile_cor <- cor.test(foot_weight$weight, foot_weight$hindft)
 
@@ -216,19 +216,19 @@ ggplot(data = foot_weight,
            y = weight)) +
   geom_point(size = 2) +
   geom_smooth(method = "lm",
-              color = "cyan2",
+              color = "cyan2", #changed color to cyan as I thought it stood out more
               size = 1,
               fill = "gray10",
               alpha = 0.4) +
   labs(x = "Hind Foot Length (mm)",
        y = "Weight (g)",
-       title = "Hind foot length vs. weight in juvenile hares with trend line",
+       title = "Hind foot length vs. weight in juvenile hares with trend line", #not sure how to name this one, 'with trend line'? 'with linear regression'?
        tag = "Figure 4",
        caption = "Figure 4. Linear regression line added with equation to previous hind foot length and weight of juvenile Snowshoe Hares.\nData: Kielland et al. (2017).") +
   scale_x_continuous(breaks = seq(60,160,20)) +
   scale_y_continuous(breaks = seq(0,1700,200)) +
   theme_bw() +
-  ggpubr::stat_regline_equation(label.x = 65, label.y = 1350)
+  ggpubr::stat_regline_equation(label.x = 65, label.y = 1350) #figured I would include this
 
 ```
 
