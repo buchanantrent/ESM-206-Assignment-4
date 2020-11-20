@@ -1,0 +1,150 @@
+---
+title: "Assignment 4"
+author: "Trent Buchanan"
+date: "11/19/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(janitor)
+library(here)
+library(lubridate)
+library(kableExtra)
+library(ggbeeswarm)
+```
+
+```{r, include=FALSE}
+bonanza_hares <- read_csv(here("data", "bonanza_hares.csv"))
+```
+
+## Introduction
+
+A 4-5 sentence "mini-introduction"...
+
+## Data and Analyses
+
+A 3-4 sentence section in which you briefly describe the data...
+Bonanza Riparian is a flood zone along the Tanana River and Bonanza Mature is a mature black spruce forest approximately 1 km inland from the river and 2 km from the riparian plot. Bonanza Riparian consisted of willow (Salix spp.), paper birch (Betula papyrifera), alder (Alnus spp.), white spruce (Picea glauca), fireweed (Epilobium augustifolium) and several grasses.
+Bonanza Mature consisted of stands of mature white spruce, paper birch, and alder, as well as black spruce (Picea mariana), Labrador tea (Ledum groenlandicum), willows, and prickly rose (Rosa acicularis).
+bonbs -- Site used for live-trapping snowshoe hares to monitor abundance and survival. Located in a mature lowland black spruce stand.
+
+
+## Exploratory Findings
+
+### **Annual juvenile hare trap counts**
+
+
+```{r, echo=FALSE,results=FALSE,warning=FALSE,message=FALSE}
+hares_juvenile <- bonanza_hares %>% 
+  filter(age == "j") %>% 
+  mutate(date_new = mdy(date)) %>% 
+  mutate(year = year(date_new))
+
+juvenile_count <- hares_juvenile %>% 
+  count(year)
+
+ggplot(data = juvenile_count,
+       aes(x = year, y = n)) +
+  geom_col() +
+  labs(x = "Year",
+       y = "Count",
+       title = "Annual juvenile hare trap counts",
+       subtitle = "1999 - 2012",
+       tag = "Figure 1",
+       caption = "Figure 1. Annual totals for juvenile Snowshoe Hares trapped at all grid sites between 1999 - 2012. Data: Kielland et al. (2017).") +
+  scale_x_continuous(breaks = seq(1999,2012,1)) +
+  scale_y_continuous(breaks = seq(0,140,20)) +
+  theme_bw()
+  
+```
+
+Between 1999 and 2012 a total of 378 juvenile aged Snowshoe Hares were trapped with a mean of 31.5, and a median of 18.5 juvenile hares being trapped each year. The maximum number of juvenile hares observed in one year is 126 from 1999; while both 2002 and 2009 observed the minimum number of juvenile hares of zero. While these two years have zero observations of juvenile hares, it is unknown as to whether juveniles were actually not present as age was not recorded for these two years. Therefore, the lowest nonzero number of juvenile hares observed is 2 in 2010. Notably, there is a steep decline in juvenile hares observed from the first three years of data being collected and juvenile hare counts are generally low (<25 individuals) with the exception of 1999, 2000, 2005 and 2008 (Kielland et al. 2017). 
+
+However, it should be noted that these are absolute counts and the data is dependent on the effort given for trapping in each year. In order to minimize the effect of this dependency, counts could be normalized by comparing the annual absolute count with the number of days or number of traps used each year for collection.
+
+### **Juvenile hare weights**
+
+```{r echo=FALSE,results=FALSE,warning=FALSE,message=FALSE}
+
+site_summary <- hares_juvenile %>% 
+  group_by(sex, grid) %>% 
+  mutate(mean_weight = mean(weight, na.rm = T),
+         sd_weight = sd(weight, na.rm = T))
+  
+
+grid_names <- c("Lowland", "Mature", "Riparian")
+names(grid_names) <- c("bonbs", "bonmat", "bonrip")
+
+site_count <- hares_juvenile %>% 
+  count(grid)
+
+ggplot() +
+  geom_beeswarm(data = hares_juvenile,
+                aes(x = sex, 
+                    y = weight,
+                    color = sex),
+                show.legend = FALSE,
+                size = 3,
+                alpha = 0.7) +
+  facet_wrap(~grid, labeller = labeller(grid = grid_names)) +
+  scale_x_discrete(labels = c("Female", "Male", "NA")) +
+  labs(x = "Sex",
+       y = "Weight (g)",
+       title = "Weight distribution of juvenile hares by site and sex",
+       tag = "Figure 2",
+       caption = "Figure 2. Distribution of observed juvenile snowshoe hare weights segragated by sex and site trapped betweenc1999 - 2012.\n Data: Kielland et al. (2017).") +
+  geom_point(data = site_summary, aes(x = sex, y = mean_weight), 
+             color = "black",
+             size = 3) +
+  facet_wrap(~grid, labeller = labeller(grid = grid_names)) +
+  geom_errorbar(data = site_summary, 
+                aes(x = sex, 
+                    ymin = mean_weight - sd_weight,
+                    ymax = mean_weight + sd_weight),
+                color = "black",
+                width = 0.3) +
+  facet_wrap(~grid, labeller = labeller(grid = grid_names)) +
+  theme_bw()
+  
+```
+
+The primary difference between the weight distributions of juvenile Snowshoe Hares at the lowland, mature, and riparian sites are the number of hares observed at each site. The riparian site has the most juvenile hares with 246 individuals observed while the mature and lowland sites have 83 and 49 observations, respectively. NA values for sex were also included for the mature and riparian sites in the visualization, but the lowland has no NA values reported. Means for each sex and site group are shown by a black dot, with error bars representing one standard deviation away from the mean (Kielland et al. 2017). 
+
+### Juvenile weight comparison (male & female snowshoe hares)
+
+**Table 1.** Descriptive statistics (mean, standard deviation, and sample size) for female(f), male(m) and NA sexed juvenile Snowshoe Hares. Data: Kielland et al. (2017).
+
+```{r echo=FALSE,warning=FALSE,message=FALSE}
+
+juvenile_summary <- hares_juvenile %>% 
+  group_by(sex) %>% 
+  summarize(
+    "Mean Weight" = mean(weight, na.rm = T),
+    "Standard Deviation" = sd(weight, na.rm = T),
+    "Sample Size" = n())
+
+colnames(juvenile_summary) <- c("Sex","Mean Weight","Standard Deviation","Sample Size")
+
+kbl(juvenile_summary) %>% 
+  kable_styling()
+
+```
+```{r include=FALSE}
+
+ggplot(data = hares_juvenile, aes(x=weight)) +
+  geom_histogram()
+
+ggplot(data= hares_juvenile, aes(sample = weight)) +
+  geom_qq()
+
+
+
+```
+
+
+
+
+### Relationship between juvenile weight & hind foot length
+
