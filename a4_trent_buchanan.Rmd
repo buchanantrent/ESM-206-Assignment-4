@@ -1,7 +1,7 @@
 ---
-title: "Assignment 4"
+title: "Assignment 4: Bunny Bonanza"
 author: "Trent Buchanan"
-date: "11/19/2020"
+date: "11/20/2020"
 output: html_document
 ---
 
@@ -35,7 +35,7 @@ bonbs -- Site used for live-trapping snowshoe hares to monitor abundance and sur
 
 ## Exploratory Findings
 
-### **Annual juvenile hare trap counts**
+### **Annual Juvenile Snowshoe Hares Trapped at Bonanza Creek**
 
 
 ```{r, echo=FALSE,results=FALSE,warning=FALSE,message=FALSE}
@@ -62,11 +62,11 @@ ggplot(data = juvenile_count,
   
 ```
 
-Between 1999 and 2012 a total of 378 juvenile aged Snowshoe Hares were trapped with a mean of 31.5, and a median of 18.5 juvenile hares being trapped each year. The maximum number of juvenile hares observed in one year is 126 from 1999; while both 2002 and 2009 observed the minimum number of juvenile hares of zero. While these two years have zero observations of juvenile hares, it is unknown as to whether juveniles were actually not present as age was not recorded for these two years. Therefore, the lowest nonzero number of juvenile hares observed is 2 in 2010. Notably, there is a steep decline in juvenile hares observed from the first three years of data being collected and juvenile hare counts are generally low (<25 individuals) with the exception of 1999, 2000, 2005 and 2008 (Kielland et al. 2017). 
+Between 1999 and 2012 a total of 378 juvenile aged Snowshoe Hares were trapped with a mean of 31.5, and a median of 18.5 juvenile hares being trapped each year. The maximum number of juvenile hares observed in one year is 126 from 1999; while both 2002 and 2009 observed the minimum number of juvenile hares of zero. While these two years have zero observations, it is unknown as to whether juvenile hares were actually not present as age was not recorded for these two years. Therefore, the lowest nonzero number of juvenile hares observed is 2 in 2010. Notably, there is a decline in juvenile hares observed from the first three years of data being collected and juvenile hare counts are generally low (<25 individuals) in the years following with the exception of 1999, 2000, 2005 and 2008 (Kielland et al. 2017). 
 
 However, it should be noted that these are absolute counts and the data is dependent on the effort given for trapping in each year. In order to minimize the effect of this dependency, counts could be normalized by comparing the annual absolute count with the number of days or number of traps used each year for collection.
 
-### **Juvenile hare weights**
+### **Juvenile Snowshoe Hare Weights Compared By Sex Over Site Observed **
 
 ```{r echo=FALSE,results=FALSE,warning=FALSE,message=FALSE}
 
@@ -94,7 +94,7 @@ ggplot() +
   scale_x_discrete(labels = c("Female", "Male", "NA")) +
   labs(x = "Sex",
        y = "Weight (g)",
-       title = "Weight distribution of juvenile hares by site and sex",
+       title = "Weight distribution of juvenile snowshoe hares by site and sex",
        tag = "Figure 2",
        caption = "Figure 2. Distribution of observed juvenile snowshoe hare weights segragated by sex and site trapped betweenc1999 - 2012.\n Data: Kielland et al. (2017).") +
   geom_point(data = site_summary, aes(x = sex, y = mean_weight), 
@@ -114,7 +114,7 @@ ggplot() +
 
 The primary difference between the weight distributions of juvenile Snowshoe Hares at the lowland, mature, and riparian sites are the number of hares observed at each site. The riparian site has the most juvenile hares with 246 individuals observed while the mature and lowland sites have 83 and 49 observations, respectively. NA values for sex were also included for the mature and riparian sites in the visualization, but the lowland has no NA values reported. Means for each sex and site group are shown by a black dot, with error bars representing one standard deviation away from the mean (Kielland et al. 2017). 
 
-### **Juvenile weight comparison (male & female snowshoe hares)**
+### **Comparison of Juvenile Male & Female Snowshoe Hare Weights)**
 
 **Table 1.** Descriptive statistics (mean, standard deviation, and sample size) for female(f), male(m) and NA sexed juvenile Snowshoe Hares. Data: Kielland et al. (2017).
 
@@ -163,7 +163,7 @@ juvenile_out
 On average, male juvenile snowshoe hares were larger than female juveniles (945.86 $\pm$ 333.22 and 855.39 $\pm$ 292.25 g, respectively; mean $\pm$ 1 standard deviation). This leads to a difference in means of 90.47 g (a 9.56% difference), which is significant (Welch's two-sample t-test: t(`r round(juvenile_out$parameter,2)`) = `r round(juvenile_out$statistic,2)`, *p* = `r juvenile_out$p.value`.)), and the effect size is small (Cohen's *d* = -0.290).
 
 
-### **Relationship between juvenile weight & hind foot length**
+### **Relationship Between Juvenile Snowshoe Hare Weight & Hind Foot Length**
 
 ```{r echo=FALSE,results=FALSE,warning=FALSE,message=FALSE}
 
@@ -186,7 +186,7 @@ ggplot(data = foot_weight,
 
 ```
 
-The relationship between observed juvenile hares' hind foot length (mm) and weight (g) appears positive across all trapping sites, and may be linear but is not strong. 
+The relationship between observed juvenile hares' hind foot length (mm) and weight (g) appears positive across all trapping sites, and may be linear but is not strong (Figure 3). 
 
 ```{r include = FALSE}
 
@@ -237,7 +237,7 @@ A simple linear regression analysis was used to explore the relationship between
 
 And as suspected through exploratory visualization, the relationship between hind foot length and weight in observed juvenile snowshoe hares is positive and also moderate in strength (*r* = `r round(juvenile_cor$estimate,2)`, t(`r juvenile_cor$parameter`) = `r round(juvenile_cor$statistic,2)`, p < 0.001).
 
-### **Summary**
+### **Summary of Findings**
 
 Exploratory data visualizations and analyses led to the following conclusions:
 
