@@ -23,13 +23,13 @@ bonanza_hares <- read_csv(here("data", "bonanza_hares.csv"))
 
 ## Introduction
 
-This study explores data collected on the Snowshoe Hare, *Lepus americanus*, from Kielland et al. (2017). Kielland et al. (2017) performed capture-recapture studies of Snowshoe Hares in the Bonanza Creek Experimental Forest of Alaska. Located along the Tanana River, the Bonanza Creek Experimental Forest is a part of the Long Term Ecological Research (LTER) Network. Snowshoe Hares are a 'keystone' prey species in this location and other northern boreal forests. Therefore, population dynamics of the Snowshoe Hare are important to quantify as variation in hare populations can have significant effects upon both vegetation and predator populations in the area as well (Kielland et al., 2017). 
+This study explores data collected on the Snowshoe Hare, *Lepus americanus*, from Kielland et al. (2017). Kielland et al. (2017) performed capture-recapture studies of Snowshoe Hares in the Bonanza Creek Experimental Forest of Alaska. Located along the Tanana River, the Bonanza Creek Experimental Forest is a part of the Long Term Ecological Research (LTER) Network. Snowshoe Hares are a 'keystone' prey species in this location and other northern boreal forests. Therefore, population dynamics of the Snowshoe Hare are important to quantify and track as variation in hare populations can have significant effects upon both vegetation and predator populations in the area as well (Kielland et al., 2017). 
 
 ## Data and Analyses
 
-The data examined in this report was collected over a time period from 1998-2012. Three sites are included in the data examined in this report: a Bonanza Creek riparian area (Riparian), a Bonanza Creek mature spruce forest (Mature), and a Bonanza Creek lowland spruce stand (Lowland). Trapping data collected includes date, time, location, trap identification, session identification, and session study parameter along with Snowshoe Hare data collected that includes left and right ear tag values, sex, age, weight, hind foot length, and a unique animal identifier (Kielland et al., 2017).
+The data examined in this report was collected over a time period from 1998-2012. Three sites are included in the data: a Bonanza Creek riparian area (Riparian), a Bonanza Creek mature spruce forest (Mature), and a Bonanza Creek lowland spruce stand (Lowland). Trapping data collected includes date, time, location, trap identification, session identification, and session study parameter along with Snowshoe Hare data collected that includes left and right ear tag values, sex, age, weight, hind foot length, and a unique animal identifier (Kielland et al., 2017).
 
-Exploratory analyses will be performed on juvenile Snowshoe Hare counts to examine relationships between Snowshoe Hare weight as a factor or sex and site trapped. Statistical analyses will be performed on the juvenile hare data to determine the difference in means of the sample populations of male or female hares. Further analysis will be conducted using a linear regression analysis to determine the relationship between juvenile Snowshoe Hare weight and hind foot length along with the determination of the correlation between these two variables.
+Exploratory analyses will be performed on juvenile aged Snowshoe Hare counts to examine relationships between Snowshoe Hare weight as a factor or sex and site trapped. Statistical analyses will be performed on the juvenile hare data to determine the difference in means of the sample populations of male or female hares. Further analysis will be conducted using a linear regression analysis to determine the relationship between juvenile Snowshoe Hare weight and hind foot length along with the determination of the correlation between these two variables.
 
 
 ## Exploratory Findings
@@ -61,9 +61,9 @@ ggplot(data = juvenile_count,
   
 ```
 
-Between 1999 and 2012 a total of 378 juvenile aged Snowshoe Hares were trapped with a mean of 31.5, and a median of 18.5 juvenile hares being trapped each year. The maximum number of juvenile hares observed in one year is 126 from 1999; while both 2002 and 2009 observed the minimum number of juvenile hares of zero. While these two years have zero observations, it is unknown as to whether juvenile hares were actually not present as age was not recorded for these two years. Therefore, the lowest nonzero number of juvenile hares observed is 2 in 2010. Notably, there is a decline in juvenile hares observed from the first three years of data being collected and juvenile hare counts are generally low (<25 individuals) in the years following with the exception of 1999, 2000, 2005 and 2008 (Kielland et al. 2017). 
+Between 1999 and 2012 a total of 378 juvenile aged Snowshoe Hares were trapped with a mean of 31.5, and a median of 18.5 juvenile hares being trapped each year. The maximum number of juvenile hares observed in one year is 126 from 1999; while both 2002 and 2009 observed the minimum number of juvenile hares of zero. While these two years have zero observations, it is unknown as to whether juvenile hares were actually not present as age was not recorded for these two years. Therefore, the lowest nonzero number of juvenile hares observed is 2 in 2010. Notably, there is a decline in juvenile hares observed from the first three years of data being collected and juvenile hare counts are generally low (<25 individuals) in the years following with the exception of 1999, 2000, 2005, and 2008 (Kielland et al. 2017). 
 
-However, it should be noted that these are absolute counts and the data is dependent on the effort given for trapping in each year. In order to minimize the effect of this dependency, counts could be normalized by comparing the annual absolute count with the number of days or number of traps used each year for collection.
+However, it should be noted that these are absolute counts and the data is dependent on the effort given for trapping in each year. In order to minimize the effect of this dependency, counts could be normalized by comparing the annual absolute count with the number of days or number of traps used each year for collection. Additional consideration could be made to ensure the age of trapped Snowshoe Hares is recorded as many individuals are missing this data.
 
 ### **Juvenile Snowshoe Hare Weights Compared By Sex Over Site Observed **
 
@@ -95,7 +95,7 @@ ggplot() +
        y = "Weight (g)",
        title = "Weight distribution of juvenile snowshoe hares by site and sex",
        tag = "Figure 2",
-       caption = "Figure 2. Distribution of observed juvenile snowshoe hare weights segragated by sex and site trapped betweenc1999 - 2012.\n Data: Kielland et al. (2017).") +
+       caption = "Figure 2. Distribution of observed juvenile Snowshoe Hare weights segragated by sex and site trapped between 1999 - 2012.\n Data: Kielland et al. (2017).") +
   geom_point(data = site_summary, aes(x = sex, y = mean_weight), 
              color = "black",
              size = 3) +
@@ -111,9 +111,9 @@ ggplot() +
   
 ```
 
-The primary difference between the weight distributions of juvenile Snowshoe Hares at the lowland, mature, and riparian sites are the number of hares observed at each site. The riparian site has the most juvenile hares with 246 individuals observed while the mature and lowland sites have 83 and 49 observations, respectively. NA values for sex were also included for the mature and riparian sites in the visualization, but the lowland has no NA values reported. Means for each sex and site group are shown by a black dot, with error bars representing one standard deviation away from the mean (Kielland et al. 2017). 
+The primary difference between the weight distributions of juvenile Snowshoe Hares at the Lowland, Mature, and Riparian sites are the number of hares observed at each site. The riparian site has the most juvenile hares with 246 individuals observed while the mature and lowland sites have 83 and 49 observations, respectively. NA values for sex were also included for the Mature and Riparian sites in the visualization, but the Lowland has no NA values reported. Means for each sex and site group are shown by a black dot, with error bars representing one standard deviation away from the mean (Kielland et al. 2017). 
 
-### **Comparison of Juvenile Male & Female Snowshoe Hare Weights)**
+### **Comparison of Juvenile Male & Female Snowshoe Hare Weights**
 
 **Table 1.** Descriptive statistics (mean, standard deviation, and sample size) for female(f), male(m) and NA sexed juvenile Snowshoe Hares. Data: Kielland et al. (2017).
 
@@ -234,16 +234,16 @@ ggplot(data = foot_weight,
 
 A simple linear regression analysis was used to explore the relationship between the juvenile Snowshoe Hare hind foot length and weight data. A significant regression model was found ($\beta$ = `r round(juvenile_coef,3)`, F(`r juvenile_lm_out$df`,`r juvenile_lm_out$df.residual`) = `r round(juvenile_lm_out$statistic,1)`, p < 0.001) with an R^2^ of `r round(juvenile_lm_out$r.squared,3)`.
 
-And as suspected through exploratory visualization, the relationship between hind foot length and weight in observed juvenile snowshoe hares is positive and also moderate in strength (*r* = `r round(juvenile_cor$estimate,2)`, t(`r juvenile_cor$parameter`) = `r round(juvenile_cor$statistic,2)`, p < 0.001).
+And as suspected through exploratory visualization, the relationship between hind foot length and weight in observed juvenile Snowshoe Hares is positive and also moderate in strength (*r* = `r round(juvenile_cor$estimate,2)`, t(`r juvenile_cor$parameter`) = `r round(juvenile_cor$statistic,2)`, p < 0.001).
 
 ### **Summary of Findings**
 
 Exploratory data visualizations and analyses led to the following conclusions:
 
-- Annual juvenile hares observed at Bonanza Creek sites have decreased since observations first began in 1999. 
-- Comparison of juvenile hare weights based on sex and segregated by site show that juveniles hares are more frequently observed at the riparian Bonanza Creek site.
+- Annual counts of juvenile Snowshoe Hares observed at Bonanza Creek sites have decreased since observations first began in 1999. 
+- A comparison of juvenile hare weights based on sex and segregated by site show that juveniles hares are more frequently observed at the Riparian Bonanza Creek site.
 - Further analysis of juvenile hare weights as a factor of sex show that males are larger in weight than females with a significant difference and small effect size.
-- The relationship between hind foot length and weight in juvenile snowshoe hares shows a moderate, positive linear correlation across all three sites. The relationship is significant and the slope represents a 9.5 g increase in weight for every 1 mm increase in hind foot length.
+- The relationship between hind foot length and weight in juvenile snowshoe hares shows a moderate, positive linear correlation across all three sites. The relationship is significant and the slope represents a `r round(juvenile_coef,3)` g increase in weight for every 1 mm increase in hind foot length.
 
 
 Options for further developments:
