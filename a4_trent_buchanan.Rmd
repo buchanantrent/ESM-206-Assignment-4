@@ -13,6 +13,7 @@ library(here)
 library(lubridate)
 library(kableExtra)
 library(ggbeeswarm)
+library(effsize)
 ```
 
 ```{r, include=FALSE}
@@ -139,11 +140,26 @@ ggplot(data = hares_juvenile, aes(x=weight)) +
 ggplot(data= hares_juvenile, aes(sample = weight)) +
   geom_qq()
 
+juveniles_f <- hares_juvenile %>% 
+  filter(sex == "f") %>% 
+  pull(weight)
 
+juveniles_m <- hares_juvenile %>% 
+  filter(sex == "m") %>% 
+  pull(weight)
+
+juvenile_ttest <- t.test(juveniles_f, juveniles_m)
+
+juvenile_ttest
+
+cohen.d(juveniles_f, juveniles_m, na.rm = T)
+
+juvenile_out <- broom::tidy(juvenile_ttest)
+juvenile_out
 
 ```
 
-
+On average, male juvenile snowshoe hares were larger than female juveniles (945.86 $\pm$ 333.22 and 855.39 $\pm$ 292.25 g, respectively; mean $\pm$ 1 standard deviation). This leads to a difference in means of 90.47 g (a 9.56% difference), which is significant (Welch's two-sample t-test: t(`r round(juvenile_out$parameter,2)`) = `r round(juvenile_out$statistic,2)`, *p* = `r juvenile_out$p.value`.)), and the effect size is small (Cohen's *d* = -0.290).
 
 
 ### Relationship between juvenile weight & hind foot length
