@@ -113,7 +113,7 @@ ggplot() +
 
 The primary difference between the weight distributions of juvenile Snowshoe Hares at the lowland, mature, and riparian sites are the number of hares observed at each site. The riparian site has the most juvenile hares with 246 individuals observed while the mature and lowland sites have 83 and 49 observations, respectively. NA values for sex were also included for the mature and riparian sites in the visualization, but the lowland has no NA values reported. Means for each sex and site group are shown by a black dot, with error bars representing one standard deviation away from the mean (Kielland et al. 2017). 
 
-### Juvenile weight comparison (male & female snowshoe hares)
+### **Juvenile weight comparison (male & female snowshoe hares)**
 
 **Table 1.** Descriptive statistics (mean, standard deviation, and sample size) for female(f), male(m) and NA sexed juvenile Snowshoe Hares. Data: Kielland et al. (2017).
 
@@ -162,5 +162,68 @@ juvenile_out
 On average, male juvenile snowshoe hares were larger than female juveniles (945.86 $\pm$ 333.22 and 855.39 $\pm$ 292.25 g, respectively; mean $\pm$ 1 standard deviation). This leads to a difference in means of 90.47 g (a 9.56% difference), which is significant (Welch's two-sample t-test: t(`r round(juvenile_out$parameter,2)`) = `r round(juvenile_out$statistic,2)`, *p* = `r juvenile_out$p.value`.)), and the effect size is small (Cohen's *d* = -0.290).
 
 
-### Relationship between juvenile weight & hind foot length
+### **Relationship between juvenile weight & hind foot length**
+
+```{r echo=FALSE,results=FALSE,warning=FALSE,message=FALSE}
+
+foot_weight <- hares_juvenile %>% 
+  select(weight, hindft)
+
+ggplot(data = foot_weight, 
+            aes(x = hindft, 
+                y = weight)) +
+  geom_point(size = 2) +
+  labs(x = "Hind Foot Length (mm)",
+       y = "Weight (g)",
+       title = "Hind foot length vs. weight in juvenile hares",
+       tag = "Figure 3",
+       caption = "Figure 3. Comparison of observed hind foot length and weight of juvenile Snowshoe Hares. Data: Kielland et al. (2017).") +
+  scale_x_continuous(breaks = seq(60,160,20)) +
+  scale_y_continuous(breaks = seq(0,1700,200)) +
+  theme_bw()
+  
+
+```
+
+The relationship between observed juvenile hares' hind foot length (mm) and weight (g) appears positive across all trapping sites. 
+
+```{r include = FALSE}
+
+juvenile_lm <- lm(weight ~ hindft, data = foot_weight)
+
+summary(juvenile_lm)
+
+juvenile_lm_tidy <- broom::tidy(juvenile_lm)
+
+juvenile_int <- juvenile_lm_tidy$estimate[1]
+
+juvenile_coef <- juvenile_lm_tidy$estimate[2]
+
+juvenile_lm_out <- broom::glance(juvenile_lm)
+
+plot(juvenile_lm)
+
+```
+
+```{r echo=FALSE,results=FALSE,warning=FALSE,message=FALSE}
+
+ggplot(data = foot_weight, 
+       aes(x = hindft, 
+           y = weight)) +
+  geom_point(size = 2) +
+  geom_smooth(method = "lm",
+              color = "red",
+              size = 0.5,
+              fill = "gray10",
+              alpha = 0.5) +
+  labs(x = "Hind Foot Length (mm)",
+       y = "Weight (g)",
+       title = "Hind foot length vs. weight in juvenile hares with linear regression line",
+       tag = "Figure 4",
+       caption = "Figure 4. Linear regression line added to observed hind foot length and weight of juvenile Snowshoe Hares.\nData: Kielland et al. (2017).") +
+  scale_x_continuous(breaks = seq(60,160,20)) +
+  scale_y_continuous(breaks = seq(0,1700,200)) +
+  theme_bw()
+
+```
 
